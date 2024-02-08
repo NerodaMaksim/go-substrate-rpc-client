@@ -18,6 +18,7 @@ package rpcmocksrv
 
 import (
 	"testing"
+	"time"
 
 	gethrpc "github.com/centrifuge/go-substrate-rpc-client/v4/gethrpc"
 	"github.com/stretchr/testify/assert"
@@ -37,7 +38,7 @@ func TestServer(t *testing.T) {
 	err := s.RegisterName("testserv3", ts)
 	assert.NoError(t, err)
 
-	c, err := gethrpc.Dial(s.URL)
+	c, err := gethrpc.Dial(s.URL, false, nil, 10*time.Second, 0)
 	assert.NoError(t, err)
 
 	var res string
