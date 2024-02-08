@@ -188,9 +188,11 @@ func DialWebsocketWithParams(ctx context.Context, endpoint, origin string, skipV
 			}
 			return nil, hErr
 		}
-		readDeadline := time.Now().Add(wsReadDeadline)
-		if err := conn.SetReadDeadline(readDeadline); err != nil {
-			return nil, err
+		if wsReadDeadline != 0 {
+			readDeadline := time.Now().Add(wsReadDeadline)
+			if err := conn.SetReadDeadline(readDeadline); err != nil {
+				return nil, err
+			}
 		}
 		return newWebsocketCodec(conn), nil
 	})
